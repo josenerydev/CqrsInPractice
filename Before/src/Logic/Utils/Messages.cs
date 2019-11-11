@@ -1,7 +1,8 @@
 ﻿using CSharpFunctionalExtensions;
+
+using Logic.Students;
+
 using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace Logic.Utils
 {
@@ -22,6 +23,18 @@ namespace Logic.Utils
 
             dynamic handler = _provider.GetService(handlerType);
             Result result = handler.Handle((dynamic)command);
+
+            return result;
+        }
+
+        public T Dispatch<T>(IQuery<T> query)
+        {
+            Type type = typeof(IQueryHandler<,>);
+            Type[] typeArgs = { query.GetType(), typeof(T) };
+            Type handlerType = type.MakeGenericType(typeArgs);
+
+            dynamic handler = _provider.GetService(handlerType);
+            T result = handler.Handle((dynamic)query);
 
             return result;
         }
