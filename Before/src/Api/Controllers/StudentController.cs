@@ -36,35 +36,35 @@ namespace Api.Controllers
                 dto.Course2, dto.Course2Grade);
 
             Result result = _messages.Dispatch(command);
-            return result.IsSuccess ? Ok() : Error(result.Error);
+            return FromResult(result);
         }
 
         [HttpDelete("{id}")]
         public IActionResult Unregister(long id)
         {
             Result result = _messages.Dispatch(new UnregisterCommand(id));
-            return result.IsSuccess ? Ok() : Error(result.Error);
+            return FromResult(result);
         }
 
         [HttpPost("{id}/enrollments")]
         public IActionResult Enroll(long id, [FromBody] StudentEnrollmentDto dto)
         {
             Result result = _messages.Dispatch(new EnrollCommand(id, dto.Course, dto.Grade));
-            return result.IsSuccess ? Ok() : Error(result.Error);
+            return FromResult(result);
         }
 
         [HttpPut("{id}/enrollments/{enrollmentNumber}")]
         public IActionResult Transfer(long id, int enrollmentNumber, [FromBody] StudentTransferDto dto)
         {
             Result result = _messages.Dispatch(new TransferCommand(id, enrollmentNumber, dto.Course, dto.Grade));
-            return result.IsSuccess ? Ok() : Error(result.Error);
+            return FromResult(result);
         }
 
         [HttpPost("{id}/enrollments/{enrollmentNumber}/deletion")]
         public IActionResult Disenroll(long id, int enrollmentNumber, [FromBody] StudentDisenrollmentDto dto)
         {
             Result result = _messages.Dispatch(new DisenrollCommand(id, enrollmentNumber, dto.Comment));
-            return result.IsSuccess ? Ok() : Error(result.Error);
+            return FromResult(result);
         }
 
         [HttpPut("{id}")]
@@ -73,7 +73,7 @@ namespace Api.Controllers
             var command = new EditPersonalInfoCommand(id, dto.Email, dto.Name);
             Result result = _messages.Dispatch(command);
 
-            return result.IsSuccess ? Ok() : Error(result.Error);
+            return FromResult(result);
         }
     }
 }
