@@ -1,7 +1,7 @@
 ﻿using CSharpFunctionalExtensions;
 
+using Logic.AppServices;
 using Logic.Dtos;
-using Logic.Students;
 using Logic.Utils;
 
 using Microsoft.AspNetCore.Mvc;
